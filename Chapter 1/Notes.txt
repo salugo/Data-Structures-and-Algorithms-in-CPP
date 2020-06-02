@@ -1,0 +1,8 @@
+C++ adds several enhancements over C (which motivates the name
+“C++”), with the principal enhancement being the object-oriented concept of a
+class.
+A class is a user-defined type that encapsulates many important mechanisms
+such as guaranteed initialization, implicit type conversion, control of memory management, operator overloading, and polymorphism (which are all important topics
+that are discussed later in this book). A class also has the ability to hide its underlying data. This allows a class to conceal its implementation details and allows
+users to conceptualize the class in terms of a well-defined interface. Classes enable
+programmers to break an application up into small, manageable pieces, or objects.
