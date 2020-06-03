@@ -6,3 +6,120 @@ such as guaranteed initialization, implicit type conversion, control of memory m
 that are discussed later in this book). A class also has the ability to hide its underlying data. This allows a class to conceal its implementation details and allows
 users to conceptualize the class in terms of a well-defined interface. Classes enable
 programmers to break an application up into small, manageable pieces, or objects.
+By convention, the function main returns the value zero to indicate success
+and returns a nonzero value to indicate failure. The include file cstdlib defines the
+constant EXIT SUCCESS to be 0.
+bool Boolean value, either true or false
+char character
+short short integer
+int integer
+long long integer
+float single-precision floating-point number
+double double-precision floating-point number
+’\n’ newline ’\t’ tab
+’\b’ backspace ’\0’ null
+’\’’ single quote ’\"’ double quote
+’\\’ backslash
+An enumeration is a user-defined type that can hold any of a set of discrete values.As a hint to the reader, we write enumeration names and other constants
+with all capital letters.
+
+char ch = ’Q’;
+char* p = &ch; // p holds the address of ch
+cout << *p; // outputs the character ’Q’
+ch = ’Z’; // ch now holds ’Z’
+cout << *p; // outputs the character ’Z’
+*p = ’X’; // ch now holds ’X’
+cout << ch; // outputs the character ’X’
+Although we cannot declare a variable to be of type void, we
+can declare a pointer to be of type void*. Such a pointer can point to a variable of
+any type. Since the compiler is unable to check the correctness of such references,
+the use of void* pointers is strongly discouraged, except in unusual cases where
+direct access to the computer’s memory is needed.
+NOTE:
+int* x, y, z; // same as: int* x; int y; int z;
+An array is a collection of elements of the same type. Given any type T and a
+constant N, a variable of type T[N] holds an array of N elements, each of type T.
+The vector type of the C++ Standard Template Library (STL) provides
+many of the capabilities of a more complete array type, including run-time index
+checking and the ability to dynamically change the array’s size.
+
+The name of an array is equivalent to a pointer to the array’s initial element and vice versa.
+char c[ ] = {’c’, ’a’, ’t’};
+char* p = c; // p points to c[0]
+char* q = &c[0]; // q also points to c[0]
+cout << c[2] << p[2] << q[2]; // outputs “ttt”
+Given two arrays c andd, the comparison (c == d) does not test whether the contents of the two arrays areequal. Rather it compares the addresses of their initial elements.If there is a need to perform operations on entire arrays (such as copying one array to another) it is a good idea to use the vector class
+
+Book calls it STL string
+#include <string>
+using std::string;
+// . . .
+string s = "to be";
+string t = "not " + s; // t = “not to be”
+string u = s + " or " + t; // u = “to be or not to be”
+if (s > t) // true: “to be” > “not to be”
+cout << u; // outputs “to be or not to be”
+
+\\\C-style structure/// can use class in C++
+A structure is useful for storing an aggregation of elements. Unlike an array, the
+elements of a structure may be of different types. Each member, or field, of a structure is referred to by a given name.
+EXAMPLE:
+enum MealType { NO PREF, REGULAR, LOW FAT, VEGETARIAN };
+struct Passenger {
+string name; // passenger name
+MealType mealPref; // meal preference
+bool isFreqFlyer; // in the frequent flyer program?
+string freqFlyerNo; // the passenger’s freq. flyer number
+};
+Passenger pass = { "John Smith", VEGETARIAN, true, "293145" };
+pass.name = "Pocahontas"; // change name
+pass.mealPref = REGULAR; // change meal preference
+
+
+The C++ run-time system reserves a large block of memory called the free
+store, for this reason. This memory is also sometimes called heap memory.
+The operator new dynamically allocates the correct amount of storage
+for an object of a given type from the free store and returns a pointer to this object.
+That is, the value of this pointer is the address where this object resides in memory.
+Passenger *p;
+// . . .
+p = new Passenger; // p points to the new Passenger
+p−>name = "Pocahontas"; // set the structure members
+p−>mealPref = REGULAR;
+p−>isFreqFlyer = false;
+p−>freqFlyerNo = "NONE";
+delete p; // destroy the object p points to
+The delete operator should only be applied to objects that have been allocated
+through new.
+
+Unlike some programming languages such as Java, C++ does not provide automatic garbage collection. This means that C++ programmers have the
+responsibility of explicitly deleting all dynamically allocated objects.
+
+char* buffer = new char[500]; // allocate a buffer of 500 chars
+buffer[3] = ’a’; // elements are still accessed using [ ]
+delete [ ] buffer; // delete the buffer
+
+\\\remember///
+If an object is allocated with new, it should eventually be deallocated with
+delete.
+
+If we were to change the (address) value of p without first deleting the structure to which it points, there would be no way for us to access this object. It would continue to
+exist for the lifetime of the program, using up space that could otherwise be used
+for other allocated objects. Having such inaccessible objects in dynamic memory
+is called a memory leak.
+
+\\\References///
+Pointers provide one way to refer indirectly to an object. Another way is through
+references. A reference is simply an alternative name for an object. Given a type
+T, the notation T& indicates a reference to an object of type T. Unlike pointers,
+which can be NULL, a reference in C++ must refer to an actual variable. When a
+reference is declared, its value must be initialized. Afterwards, any access to the
+reference is treated exactly as if it is an access to the underlying object.
+
+string author = "Samuel Clemens";
+string& penName = author; // penName is an alias for author
+penName = "Mark Twain"; // now author = “Mark Twain”
+cout << author; // outputs “Mark Twain”
+
+References are most often used for passing function arguments and are also often
+used for returning results from functions. These uses are discussed later.
